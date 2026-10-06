@@ -1,9 +1,10 @@
 <p align="center">
-  <a href="https://tein.ai"><img src="docs/branding/tein-wordmark.svg" width="360" alt="TEIN Studio" /></a>
+  <a href="examples/advanced-black-nodes-v8-audio.mp4"><img src="examples/previews/workflow.gif" width="28%" alt="Workflow animation — click for full video with audio" /></a>
+  <a href="examples/1006%20%281%29.mp4"><img src="examples/previews/example-1.gif" width="34%" alt="Example 1 — click for full video with audio" /></a>
+  <a href="examples/1006%20%281%29%283%29.mp4"><img src="examples/previews/example-2.gif" width="34%" alt="Example 2 — click for full video with audio" /></a>
 </p>
-<p align="center">
-  <img src="static/companions/video.webp" width="150" alt="TEIN creative companion" />
-</p>
+<p align="center"><em>Click any preview to open its full video with audio.</em></p>
+
 <h1 align="center">Higgsfield Genjustsu — Open Source Workflow</h1>
 <p align="center">Your scene. New characters.</p>
 <p align="center">
