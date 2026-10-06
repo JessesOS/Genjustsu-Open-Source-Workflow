@@ -4,7 +4,7 @@
 <p align="center">
   <img src="static/companions/video.webp" width="150" alt="TEIN creative companion" />
 </p>
-<h1 align="center">TEIN Video Workflow</h1>
+<h1 align="center">Higgsfield Genjustsu — Open Source Workflow</h1>
 <p align="center">Your scene. New characters.</p>
 <p align="center">
   <a href="https://tein.ai"><strong>Join the TEIN waitlist</strong></a> ·
@@ -25,7 +25,7 @@ A local UI and agent-assisted workflow for replacing video subjects using colore
 
 Extract the ZIP, open **this folder** in Codex or another coding agent with terminal/file access, and paste:
 
-> Set up this TEIN Video Workflow project for me. Read `docs/SETUP-AGENT.md` and follow it end to end. Detect my OS, install missing Python/Rubber Band/cloudflared prerequisites using the supported package manager, create the main virtual environment, install dependencies, install Python 3.12 and run `bash setup-face-mesh.sh` for both mesh modes, and create `.env` without overwriting it. Open `.env` so I can enter my own keys privately. Run the local tests, launch the app and its callback-only tunnel, run the strict readiness check on a free localhost port, verify the UI and companion images, and give me the working URL. Work independently through setup, respecting system permission prompts. Do not submit paid generations. If keys are missing, launch the UI and clearly tell me generation is waiting for them.
+> Set up this Higgsfield Genjustsu — Open Source Workflow project for me. Read `docs/SETUP-AGENT.md` and follow it end to end. Detect my OS, install missing Python/Rubber Band/cloudflared prerequisites using the supported package manager, create the main virtual environment, install dependencies, install Python 3.12 and run `bash setup-face-mesh.sh` for both mesh modes, and create `.env` without overwriting it. Open `.env` so I can enter my own keys privately. Run the local tests, launch the app and its callback-only tunnel, run the strict readiness check on a free localhost port, verify the UI and companion images, and give me the working URL. Work independently through setup, respecting system permission prompts. Do not submit paid generations. If keys are missing, launch the UI and clearly tell me generation is waiting for them.
 
 The launcher starts a callback-only Quick Tunnel when no custom webhook is configured. Keep it running with the app. The agent uses the included [setup runbook](docs/SETUP-AGENT.md). You only need to supply your own provider keys and approve any required system installation. No separate agent install is required. Native Windows users should use WSL2; macOS/Linux launch scripts are included.
 
@@ -42,7 +42,7 @@ The launcher starts a callback-only Quick Tunnel when no custom webhook is confi
 5. Upload your own MP4/MOV, prepare it, inspect the entire mask and prepared video, approve that exact mask, provide your own character references, review the prompt, and create a draft.
 6. When you like the draft, click the 1080p approval button. The completed draft and HD result remain separate; both final previews use source audio.
 
-No local model weights or GPU are needed for the default hosted setup. Python packages and the Rubber Band executable are required locally. No API keys, signed media URLs, or old jobs are included. Two user-selected demonstration videos are included in `examples/`. The bundled TEIN companion artwork is part of the UI.
+No local model weights or GPU are needed for the default hosted setup. Python packages and the Rubber Band executable are required locally. No API keys, signed media URLs, or old jobs are included. Four user-selected demonstration videos are included in `examples/`. The bundled TEIN companion artwork is part of the UI.
 
 ## What happens
 
@@ -60,7 +60,7 @@ No local model weights or GPU are needed for the default hosted setup. Python pa
 
 Open this folder in your coding agent and ask it to follow `AGENTS.md` and `.agents/skills/tein-video-workflow/SKILL.md`. No particular agent vendor or model is required, but it must be able to inspect video and files, run Python, and access the network. An agent service is **not** bundled or silently started. The UI/server automates processing and result collection; the agent or user performs visual QA and creative review.
 
-Example: “Use the TEIN workflow for my clip and references. Prepare and inspect the entire mask, repair it if needed, show the prompt, submit the authorized draft, and retrieve the final preview. Wait for my approval before HD.”
+Example: “Use the Genjustsu workflow for my clip and references. Prepare and inspect the entire mask, repair it if needed, show the prompt, submit the authorized draft, and retrieve the final preview. Wait for my approval before HD.”
 
 See [agent operations](docs/AGENT-OPERATIONS.md), [API integration](docs/ENHANCOR-API.md), [models](docs/MODELS.md), [media hosting](docs/MEDIA-HOSTING.md), and [troubleshooting](docs/TROUBLESHOOTING.md).
 
@@ -87,7 +87,12 @@ Share the original clean ZIP, or remove `.env`, `.venv`, `runs`, logs and caches
 
 ## Included examples
 
-See [examples/README.md](examples/README.md) for the two included MP4s. They are not needed to install or run the app.
+- [Workflow animation with audio](examples/advanced-black-nodes-v8-audio.mp4)
+- [Example video 1](examples/1006%20%281%29.mp4)
+- [Example video 2](examples/1006%20%281%29%283%29.mp4)
+
+
+See [examples/README.md](examples/README.md) for the included MP4s. They are not needed to install or run the app.
 
 ## Before publishing on GitHub
 
