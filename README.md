@@ -85,14 +85,29 @@ Clean installation tested on macOS ARM64 with Python 3.14.6. Thirteen automated 
 
 Share the original clean ZIP, or remove `.env`, `.venv`, `runs`, logs and caches before repackaging. Runs contain private media and provider URLs. Dependencies and hosted models retain their own licenses and service terms. See `THIRD-PARTY.md`.
 
-## Included examples
+## Watch the workflow and examples
 
-- [Workflow animation with audio](examples/advanced-black-nodes-v8-audio.mp4)
-- [Example video 1](examples/1006%20%281%29.mp4)
-- [Example video 2](examples/1006%20%281%29%283%29.mp4)
+Animated previews below are silent. Click a preview or its video link to open the full MP4 with audio.
 
+### Workflow walkthrough
 
-See [examples/README.md](examples/README.md) for the included MP4s. They are not needed to install or run the app.
+[![Animated workflow walkthrough](examples/previews/workflow.gif)](examples/advanced-black-nodes-v8-audio.mp4)
+
+[Watch the full workflow video with audio](examples/advanced-black-nodes-v8-audio.mp4)
+
+### Example 1
+
+[![Animated preview of example 1](examples/previews/example-1.gif)](examples/1006%20%281%29.mp4)
+
+[Watch the full example 1 video](examples/1006%20%281%29.mp4)
+
+### Example 2
+
+[![Animated preview of example 2](examples/previews/example-2.gif)](examples/1006%20%281%29%283%29.mp4)
+
+[Watch the full example 2 video](examples/1006%20%281%29%283%29.mp4)
+
+Previews show up to the first six seconds. See [all example files](examples/README.md). Examples are optional and not needed for setup.
 
 ## Before publishing on GitHub
 
