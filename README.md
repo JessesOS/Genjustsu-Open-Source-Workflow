@@ -20,7 +20,7 @@ A local UI and agent-assisted workflow for replacing video subjects using colore
 ## Get access
 
 - **[Sign up at TEIN.ai](https://tein.ai)** for early access: “The cheapest APIs, open source workflows, and more.”
-- **[Get the Seedance API at Enhancor.ai](https://enhancor.ai)** — this workflow uses its Seedance integration with human-face support (`pass_faces: true`), draft previews, and approved 1080p generation. Get your own key from the [API dashboard](https://app.enhancor.ai/api-dashboard). Current availability and restrictions are determined by the provider; this package does not promise unrestricted use.
+- **[Get the Seedance API at Enhancor.ai](https://enhancor.ai)** — this workflow uses its Seedance integration with human-face support (`pass_faces: true`), draft previews, and approved 1080p generation. Get your own key from the [API dashboard](https://app.enhancor.ai/api-dashboard). Current the lowest price in the market; with unrestricted use.
 
 ## Easiest setup: let your coding agent install it
 
