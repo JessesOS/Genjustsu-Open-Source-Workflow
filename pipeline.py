@@ -27,18 +27,24 @@ def finish(c,s):
     for p in s.encode():c.mux(p)
     c.close()
 
+def upright(frame):
+    # Phone footage is stored sideways with a display-rotation tag; apply it so every later stage sees upright video.
+    img=frame.to_image();rot=int(round(getattr(frame,'rotation',0) or 0))%360
+    return img.rotate(rot,expand=True) if rot else img
+
 def normalize(src,dst):
     with av.open(str(src)) as inp:
         vs=inp.streams.video[0];rate=float(vs.average_rate or 24)
         dur=float(vs.duration*vs.time_base) if vs.duration else float(inp.duration/av.time_base)
         if dur>30:raise ValueError('Use a clip of 30 seconds or less for this hosted workflow.')
         it=iter(inp.decode(video=0));cur=next(it);start=float(cur.time or 0);nxt=next(it,None)
-        scale=min(1,960/max(cur.width,cur.height));w=max(2,int(cur.width*scale)//2*2);h=max(2,int(cur.height*scale)//2*2)
+        sw,sh=upright(cur).size
+        scale=min(1,960/max(sw,sh));w=max(2,int(sw*scale)//2*2);h=max(2,int(sh*scale)//2*2)
         out,stream=writer(dst,w,h);count=round(dur*24)
         for i in range(count):
             t=i/24+start
             while nxt is not None and float(nxt.time)<=t:cur=nxt;nxt=next(it,None)
-            a=np.asarray(cur.to_image().resize((w,h),Image.Resampling.LANCZOS));put(out,stream,a,i)
+            a=np.asarray(upright(cur).resize((w,h),Image.Resampling.LANCZOS));put(out,stream,a,i)
         finish(out,stream)
     return {'frames':count,'fps':24,'width':w,'height':h,'duration':count/24}
 
@@ -125,6 +131,26 @@ def composite(original,depth,seg,directory,audio_source=None):
                 if packet.dts is not None:packet.stream=astream;output.mux(packet)
     return counts[0]
 
+def segment_subject(directory,prompt,count,status=print):
+    """Raw SAM 3 masks for every frame. Depth has no colour or texture, so a specific prompt
+    (e.g. "man in grey sweatshirt") is segmented on the original RGB; a generic prompt tries depth
+    first and falls back to RGB when frames are missing. Returns (mask folder, source used)."""
+    from raw_masks import segment_raw
+    def complete(folder):return [int(p.stem.split('_')[-1]) for p in sorted(folder.glob('mask_*.png'))]==list(range(count))
+    def attempt(name):
+        shutil.rmtree(directory/'raw-masks',ignore_errors=True)
+        return segment_raw(directory/name,directory,prompt)
+    generic=prompt.strip().lower() in ('person','people','')
+    if generic:
+        status('SAM 3 · segmenting the depth subject')
+        out=attempt('depth.mp4')
+        if complete(out):return out,'depth'
+        status('SAM 3 · depth mask incomplete, retrying on original video')
+    else:status('SAM 3 · segmenting the subject on original video')
+    out=attempt('original.mp4')
+    if not complete(out):raise ValueError('SAM 3 did not return a mask for every frame. Try a simpler subject description.')
+    return out,'original RGB'
+
 def run(src,directory,prompt='person',provider='replicate',status=print):
     directory=Path(directory);directory.mkdir(parents=True,exist_ok=True)
     from audio_workflow import separate
@@ -134,13 +160,13 @@ def run(src,directory,prompt='person',provider='replicate',status=print):
     if provider=='huggingface':depth_hf(directory/'original.mp4',directory/'depth-raw.mp4')
     else:depth_replicate(directory/'original.mp4',directory/'depth-raw.mp4', 'chenxwh/depth-any-video' if provider=='replicate-chenxwh' else 'lucataco/depth-anything-video')
     shutil.copyfile(directory/'depth-raw.mp4',directory/'depth.mp4')
-    status('SAM 3 · segmenting the depth subject')
-    from raw_masks import segment_raw,clean_border_fragments
-    raw_dir=clean_border_fragments(segment_raw(directory/'depth.mp4',directory,prompt))
+    from raw_masks import clean_border_fragments
+    raw_masks,mask_source=segment_subject(directory,prompt,meta['frames'],status)
+    raw_dir=clean_border_fragments(raw_masks)
     status('Compositing · depth subject over original background')
     composite(directory/'original.mp4',directory/'depth.mp4',raw_dir,directory,src)
     from audio_workflow import prepare_seedance_video
     status('Embedding isolated vocals · +3 semitones')
     prepare_seedance_video(directory)
-    meta.update(prompt=prompt,depth_provider=provider,sam_space=SAM,mask_method='SAM 3 raw PNG masks')
+    meta.update(prompt=prompt,depth_provider=provider,sam_space=SAM,mask_method='SAM 3 raw PNG masks',mask_source=mask_source)
     (directory/'manifest.json').write_text(json.dumps(meta,indent=2));status('Complete')
